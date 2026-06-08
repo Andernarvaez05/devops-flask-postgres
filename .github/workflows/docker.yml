@@ -29,12 +29,14 @@ jobs:
  
       - name: Construir Imagen
         run: |
+          REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
           docker build \
-          -t ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }} \
-          -t ghcr.io/${{ github.repository }}:latest \
+          -t ghcr.io/${REPO}:${{ env.IMAGE_TAG }} \
+          -t ghcr.io/${REPO}:latest \
           .
- 
+
       - name: Publicar Imagen
         run: |
-          docker push ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
-          docker push ghcr.io/${{ github.repository }}:latest
+          REPO=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+          docker push ghcr.io/${REPO}:${{ env.IMAGE_TAG }}
+          docker push ghcr.io/${REPO}:latest
